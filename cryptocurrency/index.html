@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>reveal-md</title>
+        <title>Cryptocurrencies</title>
         <link rel="stylesheet" href="./css/reveal.css">
         <link rel="stylesheet" href="./css/theme/black.css" id="theme">
         <link rel="stylesheet" href="./css/highlight/zenburn.css">
@@ -47,7 +47,7 @@ hash_data(data1) == hash_data(data1) // always
 struct Node
 {
   void* data;
-  struct Node* next;
+  struct Node* previous;
 }
 ```
 
@@ -57,8 +57,8 @@ becomes
 struct HashNode
 {
   void* data;
-  struct HashNode* next;
-  char nextHash[32]; // 256 bits for bitcoin
+  struct HashNode* previous;
+  char previousHash[32]; // 256 bits for bitcoin
 }
 ```
 </script></section><section  data-markdown><script type="text/template">
