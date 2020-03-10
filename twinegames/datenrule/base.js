@@ -111,7 +111,6 @@ setup.music.fadeIn = function() {
 
   var fadeAudio = setInterval(function () {
     // Only fade if past the fade out point or not at zero already
-    console.log(volume);
     if (volume < 10) {
       el.volume = volume / 10.0;
     } else {
@@ -134,7 +133,6 @@ setup.music.stop = function(callback) {
   // Set the point in playback that fadeout begins. This is for a 2 second fade out.
   var fadePoint = el.duration - 2;
   var volume = parseInt(el.volume * 10.0);
-  console.log(volume);
 
   var fadeAudio = setInterval(function () {
     if (volume > 0) {
