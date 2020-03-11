@@ -24,7 +24,7 @@ a[data-passage] {
   margin-left: auto;
   margin-right: auto;
   padding-top: 1em;
-  min-width: 30%;
+  max-width: 60%;
 }
 
 .show-buttons a[data-passage] {
@@ -51,6 +51,10 @@ a[data-passage] {
   min-width: 60%;
 }
 
+.sans {
+  font-family: SansUT;
+}
+
 body {
   font-family: DeterminationMono;
   font-size: 2.5em;
@@ -75,6 +79,6 @@ a {
 }
 
 @font-face {
-  font-family: DeterminationSans;
-  src: url("twinemedia/font/DeterminationSansWeb.woff") format("woff");
+  font-family: SansUT;
+  src: url("twinemedia/font/Comic-Sans-UT.woff") format("woff");
 }

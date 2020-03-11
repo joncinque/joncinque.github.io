@@ -3,11 +3,14 @@ window.setup = window.setup || {};
 
 setup.createChatArea = function(choices) {
   return '<img class="center" src="'+ setup.image.src + '">' +
-  '<div id="chat-area">' +
-  '<div id="typewriter"></div>' +
-  '<a id="continue" href="javascript:void(0)" onclick="setup.typewriter.clearAndWrite();">Continue</a>' +
-  choices +
-  '</div>';
+    '<div id="chat-area" ' +
+    (setup.sans ? 'class="sans"' : '') +
+    ' >'+
+    '<div id="typewriter" ' +
+    ' ></div>' +
+    '<a id="continue" href="javascript:void(0)" onclick="setup.typewriter.clearAndWrite();">Continue</a>' +
+    choices +
+    '</div>';
 }
 
 // Add a 'typewriter' object
@@ -41,6 +44,8 @@ setup.typewriter.write = function(lines) {
   setup.typewriter.lines = lines;
   setup.typewriter.writeChar();
 }
+
+setup.typewriter.src = "twinemedia/sound/talk_default.wav";
 
 // Write text character by character to an element with the ID "typewriter"
 setup.typewriter.writeChar = function() {
@@ -95,6 +100,8 @@ setup.typewriter.writeChar = function() {
   }
 }
 
+setup.sans = false;
+
 setup.image = {};
 setup.image.src = "twinemedia/img/Black.png";
 
@@ -129,21 +136,26 @@ setup.music.play = function(src) {
 
 setup.music.stop = function(callback) {
   var el = setup.music.element;
-
-  // Set the point in playback that fadeout begins. This is for a 2 second fade out.
-  var fadePoint = el.duration - 2;
-  var volume = parseInt(el.volume * 10.0);
-
-  var fadeAudio = setInterval(function () {
-    if (volume > 0) {
-      el.volume = volume / 10.0;
-    } else {
-      clearInterval(fadeAudio);
-      el.pause();
-      if (callback !== undefined) {
-        callback();
-      }
+  if (el.paused === true) {
+    if (callback !== undefined) {
+      callback();
     }
-    volume -= 1;
-  }, 20);
+  } else {
+    // Set the point in playback that fadeout begins. This is for a 2 second fade out.
+    var fadePoint = el.duration - 2;
+    var volume = parseInt(el.volume * 10.0);
+
+    var fadeAudio = setInterval(function () {
+      if (volume > 0) {
+        el.volume = volume / 10.0;
+      } else {
+        clearInterval(fadeAudio);
+        el.pause();
+        if (callback !== undefined) {
+          callback();
+        }
+      }
+      volume -= 1;
+    }, 20);
+  }
 }

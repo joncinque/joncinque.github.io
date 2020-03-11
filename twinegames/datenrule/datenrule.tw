@@ -18,15 +18,28 @@ DateNRule
 <img class="title" src="twinemedia/img/DateNRule2.png" />
 
 <div class="start-buttons show-buttons">
-[[New Game]] [[Reset]]
+[[New Game]]
+<%
+s.gameCompleted = true;
+if (s.gameCompleted === true) {
+  print('[[Chapter Select]]');
+}
+%>
 </div>
 
-:: Reset
-<p>
-Already trying to destroy another timeline?  We're onto you.
-</p>
+:: Chapter Select
+
 <div class="show-buttons">
-[[Start]]
+<ul>
+<li>[[New Game]]</li>
+<li>[[Toriel]]</li>
+<li>[[Dummy|DummyDateStart]]</li>
+<li>[[Monster Kid|MonsterKidAppear]]</li>
+<li>[[Jerry|JerryDateStart]]</li>
+<li>[[Choice|JerryDateEnd]]</li>
+<li>[[Sans|SansEnter]]</li>
+<li>[[End|SansDateSerious]]</li>
+</ul>
 </div>
 
 :: New Game
@@ -294,7 +307,7 @@ print(setup.createChatArea('[[Continue|TorielGoodIdea]]'));
 setup.typewriter.src = "twinemedia/sound/talk_default.wav";
 setup.typewriter.write([
 "* (More laughing until she bleats.)",
-"* (Evidently, she had been saving that one for a long time.)",
+"* (She had been saving that one for a long time.)",
 ]);
 %>
 
@@ -362,6 +375,7 @@ setup.typewriter.write([
 
 <%
 setup.image.src = "twinemedia/img/Dummy.png";
+setup.typewriter.src = "twinemedia/sound/talk_default.wav";
 print(setup.createChatArea('[[Continue|DummyDateStart]]'));
 setup.typewriter.write([
 "* (It's the DUMMY from the underground.)",
@@ -378,8 +392,8 @@ setup.typewriter.write([
 s.coolSong = false;
 setup.image.src = "twinemedia/img/Dummy.png";
 setup.music.play("twinemedia/music/mus_napstahouse.ogg");
-print(setup.createChatArea('[[Continue|DummyDateMain]]'));
 setup.typewriter.src = "twinemedia/sound/talk_flowey_1.wav";
+print(setup.createChatArea('[[Continue|DummyDateMain]]'));
 setup.typewriter.write([
 "Hey.",
 "...",
@@ -600,6 +614,8 @@ setup.typewriter.write([
 
 <%
 setup.image.src = "twinemedia/img/MonsterKid.png";
+setup.typewriter.src = "twinemedia/sound/talk_default.wav";
+setup.music.stop();
 print(setup.createChatArea('[[Continue|MonsterKidStart]]'));
 setup.typewriter.write([
 "* (He somehow still isn't grown up.)",
@@ -861,6 +877,8 @@ setup.typewriter.write([
 :: JerryDateStart
 
 <%
+setup.typewriter.src = "twinemedia/sound/talk_default.wav";
+setup.image.src = "twinemedia/img/Black.png";
 setup.music.play("twinemedia/music/mus_date_tense.ogg");
 print(setup.createChatArea('[[Continue|JerryDatePreEntrance]]'));
 setup.typewriter.write([
@@ -1113,9 +1131,9 @@ setup.typewriter.write([
 
 <%
 s.pieEaten = true;
-print(setup.createChatArea('[[Continue|SansPreEnter]]'));
+print(setup.createChatArea('[[Continue|DateChoice]]'));
 setup.typewriter.write([
-"* (You eat the rest, carefully going around where JERRY's touched it.)",
+"* (You eat the rest, carefully going around where JERRY touched it.)",
 "* (HP fully restored!)",
 "* (Stomach full!)",
 "* (Mother proud!)",
@@ -1126,21 +1144,384 @@ setup.typewriter.write([
 
 <%
 s.pieEaten = false;
-print(setup.createChatArea('[[Continue|SansPreEnter]]'));
+print(setup.createChatArea('[[Continue|DateChoice]]'));
 setup.typewriter.write([
 "* (You have standards.)",
 "* (And a growling stomach.)",
 ]);
 %>
 
-:: SansPreEnter
+:: DateChoice
+
+<%
+print(setup.createChatArea('[[Dummy|DummyChoice]] [[Monster Kid|MonsterKidChoice]] [[Jerry|JerryChoice]]'));
+setup.typewriter.write([
+"* (...)",
+"* (You wait around some more.)",
+"* (All of these DATES are tiring.)",
+"* (Are these three your only options?)",
+"* (DUMMY is gentle and understanding.)",
+"* (...But doesn't really have a body.)",
+"* (MONSTER KID is playful and family-oriented.)",
+"* (...But isn't really an adult.)",
+"* (JERRY is ...)",
+"* (...)",
+"* (... JERRY.)",
+"* (Who is your choice at this point?)",
+]);
+%>
+
+:: DummyChoice
+
+<%
+s.choice = 'DUMMY';
+print(setup.createChatArea('[[Continue|MomentPause]]'));
+setup.typewriter.write([
+"* (They'll give you liberty to pursue your dreams.)",
+"* (...Kind of like being alone.)",
+]);
+%>
+
+:: MonsterKidChoice
+
+<%
+s.choice = 'MONSTER KID';
+print(setup.createChatArea('[[Continue|MomentPause]]'));
+setup.typewriter.write([
+"* (Let's hope he can get through MONSTER puberty even faster.)",
+"* (Maybe you'll even get that clan invite.)",
+]);
+%>
+
+:: JerryChoice
+
+<%
+s.choice = 'JERRY';
+print(setup.createChatArea('[[Continue|MomentPause]]'));
+setup.typewriter.write([
+"* (BURNING MONSTER would be a lot of fun.)",
+"* (And you don't need to become like him.)",
+]);
+%>
+
+:: MomentPause
 
 <%
 print(setup.createChatArea('[[Continue|SansEnter]]'));
 setup.typewriter.write([
 "* (...)",
-"* (You wait around some more.)",
+"* (Good thing you don't need to make up your mind now.)",
+"* (...)",
+"* (You hear someone come into the house.)",
+"* (The step is familiar.)",
+"* (It has a boney quality.)",
+"* (Without the trousle.)",
+"* (It's your old friend SANS!)",
 ]);
 %>
 
 :: SansEnter
+
+<%
+s.sansJokes = false;
+s.sansLols = false;
+s.sansPuns = false;
+s.sansBadPuns = false;
+s.sansUnforgivablePuns = false;
+s.sansScience = false;
+setup.sans = true;
+setup.image.src = "twinemedia/img/Sans.png";
+setup.typewriter.src = "twinemedia/sound/talk_sans.wav";
+setup.music.play("twinemedia/music/mus_muscle.ogg");
+print(setup.createChatArea('[[Continue|SansDateMain]]'));
+setup.typewriter.write([
+"hey.",
+"i saw toriel driving jerry home.",
+"so i thought i'd come in and see what's up.",
+]);
+%>
+
+:: SansDateMain
+
+<%
+setup.image.src = "twinemedia/img/Sans.png";
+setup.typewriter.src = "twinemedia/sound/talk_sans.wav";
+let path = '[[Jokes|SansDateJokes]] [[LOLs|SansDateLOLs]] [[Puns|SansDatePuns]]';
+if (s.sansPuns === true && s.sansLols === true && s.sansJokes === true) {
+  path += ' [[Bad Puns|SansDateBadPuns]]';
+}
+if (s.sansBadPuns === true) {
+  path += ' [[Unforgivable Puns|SansDateUnforgivablePuns]]';
+}
+if (s.sansUnforgivablePuns === true) {
+  path += ' [[Science|SansDateScience]]';
+}
+print(setup.createChatArea(path));
+
+if (s.sansUnforgivablePuns === true && s.sansBadPuns === true &&
+  s.sansPuns === true && s.sansLols === true && s.sansJokes === true) {
+  setup.typewriter.write([
+  "ok, i think that's my max.",
+  "we can talk about boring things if you want.",
+  ]);
+} else if (s.sansBadPuns === true && s.sansPuns === true &&
+  s.sansLols === true && s.sansJokes === true) {
+  setup.typewriter.write([
+  "you might hate me by the end of this.",
+  "not that i care.",
+  ]);
+} else if (s.sansPuns === true && s.sansLols === true && s.sansJokes === true) {
+  setup.typewriter.write([
+  "so you like these?",
+  "i've got more where that came from.",
+  ]);
+} else if (s.sansPuns === true || s.sansLols === true || s.sansJokes === true) {
+  setup.typewriter.write([
+  "this is fun, keep it up.",
+  ]);
+} else {
+  setup.typewriter.write([
+  "i wanna try this date thing too.",
+  "gimme your best shot.",
+  ]);
+}
+%>
+
+:: SansDateJokes
+
+<%
+if (s.sansJokes === true) {
+  print(setup.createChatArea('[[Continue|SansDateMain]]'));
+  setup.typewriter.write([
+  "sorry, i'm bone dry for jokes.",
+  ]);
+} else {
+  print(setup.createChatArea('[[Continue|SansDateJokesMore]]'));
+  setup.typewriter.write([
+  "what did the most famous skeleton president say in his speech?",
+  ]);
+}
+s.sansJokes = true;
+%>
+
+:: SansDateJokesMore
+
+<%
+setup.image.src = "twinemedia/img/SansShrug.png";
+print(setup.createChatArea('[[Continue|SansDateMain]]'));
+setup.typewriter.write([
+"the only thing we have to fear is femur itself.",
+]);
+%>
+
+:: SansDateLOLs
+
+<%
+if (s.sansLols === true) {
+  print(setup.createChatArea('[[Continue|SansDateMain]]'));
+  setup.typewriter.write([
+  "sorry, i don't have the spine for more lols.",
+  ]);
+} else {
+  print(setup.createChatArea('[[Continue|SansDateLOLsMore]]'));
+  setup.typewriter.write([
+  "how did the skeleton student succeed through his studies?"
+  ]);
+}
+s.sansLols = true
+%>
+
+:: SansDateLOLsMore
+
+<%
+setup.image.src = "twinemedia/img/SansShrug.png";
+print(setup.createChatArea('[[Continue|SansDateMain]]'));
+setup.typewriter.write([
+"by giving it the old skele-try."
+]);
+%>
+
+:: SansDatePuns
+
+<%
+if (s.sansPuns === true) {
+  print(setup.createChatArea('[[Continue|SansDateMain]]'));
+  setup.typewriter.write([
+  "sorry, my ribs have been too tickled for more puns.",
+  ]);
+} else {
+  print(setup.createChatArea('[[Continue|SansDatePunsMore]]'));
+  setup.typewriter.write([
+  "why did the skeleton's barbecue fail?"
+  ]);
+}
+s.sansPuns = true;
+%>
+
+:: SansDatePunsMore
+
+<%
+setup.image.src = "twinemedia/img/SansShrug.png";
+print(setup.createChatArea('[[Continue|SansDateMain]]'));
+setup.typewriter.write([
+"she ran out of spare ribs.",
+]);
+%>
+
+:: SansDateBadPuns
+
+<%
+if (s.sansBadPuns === true) {
+  print(setup.createChatArea('[[Continue|SansDateMain]]'));
+  setup.typewriter.write([
+  "sorry, my ribs have been too tickled for more bad puns.",
+  ]);
+} else {
+  print(setup.createChatArea('[[Continue|SansDateBadPunsMore]]'));
+  setup.typewriter.write([
+  "tibia honest, you might not like this next one.",
+  ]);
+}
+s.sansBadPuns = true;
+%>
+
+:: SansDateBadPunsMore
+
+<%
+setup.image.src = "twinemedia/img/SansShrug.png";
+print(setup.createChatArea('[[Continue|SansDateMain]]'));
+setup.typewriter.write([
+"that was it.",
+]);
+%>
+
+:: SansDateUnforgivablePuns
+
+<%
+if (s.sansUnforgivablePuns === true) {
+  print(setup.createChatArea('[[Continue|SansDateMain]]'));
+  setup.typewriter.write([
+  "please forgive me for not wanting to repeat that one.",
+  ]);
+} else {
+  print(setup.createChatArea('[[Continue|SansDateUnforgivablePunsMore]]'));
+  setup.typewriter.write([
+  "*huff* *huff* alright, i'll pull out all the stops for this one.",
+  "i'm patella-ing you.",
+  "no more fib-ulas.",
+  "really going for broke.",
+  "all the way down to the bone.",
+  "skull-fully execute.",
+  "here goes.",
+  "what is the purpose of skeleton football?",
+  ]);
+}
+s.sansUnforgivablePuns = true;
+%>
+
+:: SansDateUnforgivablePunsMore
+
+<%
+setup.image.src = "twinemedia/img/SansShrug.png";
+print(setup.createChatArea('[[Continue|SansDateMain]]'));
+setup.typewriter.write([
+"to get into the end-bone.",
+]);
+%>
+
+:: SansDateScience
+
+<%
+setup.sans = true;
+setup.image.src = "twinemedia/img/Sans.png";
+setup.typewriter.src = "twinemedia/sound/talk_sans.wav";
+setup.music.stop();
+print(setup.createChatArea('[[Continue|SansDateSerious]]'));
+setup.typewriter.write([
+"i'm glad you asked me about this.",
+"it's the real reason i came to see you.",
+"we've kept up our research from the underground.",
+"the abrupt timeline jumps have subsided in the years since we left.",
+"but we have picked up on some other activity.",
+"not caused by you this time, but for you.",
+]);
+%>
+
+:: SansDateSerious
+
+<%
+setup.sans = true;
+setup.image.src = "twinemedia/img/Sans.png";
+setup.typewriter.src = "twinemedia/sound/talk_sans.wav";
+setup.music.play("twinemedia/music/mus_reunited.ogg");
+print(setup.createChatArea('[[Continue|SansDateOutside]]'));
+setup.typewriter.write([
+"listen.",
+"toriel has set up all of these dates for you.",
+"all in the name of finding your soulmate.",
+"we have evidence that none of these monsters are your soulmate.",
+"so you don't have to worry.",
+"you won't be stuck with the dummy.",
+"you won't have to wait through monster kid's gross puberty.",
+"he won't ever move out of his mom's house anyway.",
+"and jerry will never be happy.",
+"but that's because he's awful.",
+"from our research, the new anomalies are from your true soulmate.",
+"we've been able to pick up a few messages.",
+"they seem to call out to you by many names.",
+"'clam'",
+"'clamclam'",
+"'clamclamclamclamclamclamclamclam'",
+"'moon child'",
+"'baby cat'",
+"and a bunch of others that involve your butt.",
+]);
+%>
+
+:: SansDateOutside
+
+<%
+setup.music.stop();
+print(setup.createChatArea('[[Yes|FinalChoiceYes]] [[No|FinalChoiceNo]]'));
+setup.typewriter.write([
+"you know what, I'll let him take it from here.",
+"let me know your response once he's done.",
+]);
+%>
+
+:: FinalChoiceNo
+
+<%
+print(setup.createChatArea('[[Yes|FinalChoiceYes]] [[No|FinalChoiceNo]]'));
+setup.typewriter.write([
+"i'm just going to assume that was a mistake.",
+"let me know your response once he's done.",
+]);
+%>
+
+:: FinalChoiceYes
+
+<%
+setup.music.play("twinemedia/music/mus_xpart.ogg");
+print(setup.createChatArea('[[End|End]]'));
+setup.typewriter.write([
+"hop on.",
+"have fun.",
+"live happily after."
+]);
+%>
+
+:: End
+
+<%
+setup.sans = false;
+s.gameCompleted = true;
+setup.typewriter.src = "twinemedia/sound/talk_default.wav";
+setup.music.play("twinemedia/music/mus_dogsong.ogg");
+print(setup.createChatArea('[[End|Start]]'));
+setup.typewriter.write([
+"I love you, Lauren.",
+"And I can't wait for a lifetime with you.",
+"Love, Jon"
+]);
+%>

@@ -3,7 +3,7 @@ SHELL=/usr/bin/env fish
 SNOWMAN_DIR = ~/src/ref/snowman
 TWEEGO_DIR = ~/src/ref/tweego
 
-.PHONY: snowman tweego build dev kid toriel dummy jerry sans
+.PHONY: snowman tweego build dev kid toriel dummy jerry sans end
 
 snowman:
 	git clone https://github.com/videlais/snowman.git $(SNOWMAN_DIR)
@@ -36,5 +36,11 @@ kid:
 jerry:
 	$(TWEEGO_DIR)/tweego -f snowman-2.0.3 -s JerryDateStart -w -o datenrule.html datenrule
 
-sans:
+choice:
 	$(TWEEGO_DIR)/tweego -f snowman-2.0.3 -s JerryDateEnd -w -o datenrule.html datenrule
+
+sans:
+	$(TWEEGO_DIR)/tweego -f snowman-2.0.3 -s SansEnter -w -o datenrule.html datenrule
+
+end:
+	$(TWEEGO_DIR)/tweego -f snowman-2.0.3 -s SansDateScience -w -o datenrule.html datenrule
