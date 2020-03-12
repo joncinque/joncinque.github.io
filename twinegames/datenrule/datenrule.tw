@@ -15,7 +15,7 @@
 DateNRule
 
 :: Start
-<img class="title" src="twinemedia/img/DateNRule2.png" />
+<img class="title" src="twinemedia/img/DateNRule.png" />
 
 <div class="start-buttons show-buttons">
 [[New Game]]
@@ -1469,6 +1469,8 @@ setup.typewriter.write([
 "from our research, the new anomalies are from your true soulmate.",
 "we've been able to pick up a few messages.",
 "they seem to call out to you by many names.",
+"'miu miu'",
+"'squish'",
 "'clam'",
 "'clamclam'",
 "'clamclamclamclamclamclamclamclam'",
