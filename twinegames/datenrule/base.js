@@ -46,6 +46,11 @@ setup.typewriter.write = function(lines) {
 }
 
 setup.typewriter.src = "twinemedia/sound/talk_default.wav";
+const MAX_TALK_ELEMENTS = 5;
+setup.typewriter.soundElements = [];
+for (var i = 0; i < MAX_TALK_ELEMENTS; ++i) {
+  setup.typewriter.soundElements.push(document.createElement('audio'));
+}
 
 // Write text character by character to an element with the ID "typewriter"
 setup.typewriter.writeChar = function() {
@@ -61,9 +66,19 @@ setup.typewriter.writeChar = function() {
     $("#typewriter").html($("#typewriter").html() + currentChar);
     // Play the sound
     if (currentChar !== ' ' && currentIndex % 2 == 0) {
-      var el = document.createElement('audio');
+      var i = (currentIndex / 2) % MAX_TALK_ELEMENTS;
+      var el = setup.typewriter.soundElements[i];
       el.src = setup.typewriter.src;
-      el.play();
+      var playPromise = el.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(function(error) {
+          if (error.name === "NotAllowedError") {
+            console.log("Talk: allow media for sound to come through");
+          } else {
+            console.log(error);
+          }
+        });
+      }
     }
     // Increase the index
     setup.typewriter.textIndex++;
@@ -113,7 +128,16 @@ setup.music.fadeIn = function() {
   var el = setup.music.element;
   el.loop = true;
   el.volume = 0.1;
-  el.play();
+  var playPromise = el.play();
+  if (playPromise !== undefined) {
+    playPromise.catch(function(error) {
+      if (error.name === "NotAllowedError") {
+        console.log("Fade in: allow media for sound to come through");
+      } else {
+        console.log(error);
+      }
+    });
+  }
   var volume = 1;
 
   var fadeAudio = setInterval(function () {
