@@ -7,7 +7,7 @@
 
 :: StoryTitle
 
-DateNRule
+DATE N' RULE
 
 :: Start
 
@@ -1576,12 +1576,12 @@ setup.typewriter.write([
 setup.music.play("twinemedia/music/mus_dogsong.ogg");
 %>
 * Made by <a href="https://jonc.dev" target="_blank">Jon</a> for his love.
-* All assets (fonts, sounds, music, characters, and images) from <a href="https://undertale.com/" target="_blank">Undertale</a> by Toby Fox.  Please buy his wonderful game.
-* Date N Rule Title created using <a href="https://fontmeme.com/undertale-logo-font/" target="_blank">Undertale Logo Font</a>.
+* All assets (fonts, sounds, music, characters, and images) from <a href="https://undertale.com/" target="_blank">UNDERTALE</a> by Toby Fox.  Please buy his wonderful game.
+* DATE N' RULE Title created using <a href="https://fontmeme.com/undertale-logo-font/" target="_blank">Undertale Logo Font</a>.
 * 'Determination' font by Haley Wakamatsu at <a href="https://www.behance.net/gallery/31268855/Determination-Better-Undertale-Font" target="_blank">Behance</a>.
 * 'Sans' font by fraxtil at <a href="http://fra.xtil.net/undertale/fonts/Comic-Sans-UT.zip" target="_blank">fra.xtil.net</a>.
 * Sounds by Benno950 at <a href="https://www.deviantart.com/benno950/art/Download-Undertale-Sound-Effects-589709656" target="_blank">DeviantArt</a>.
-* Images from <a href="https://undertale.fandom.com/wiki/Main_Page" target="_blank">The Undertale Wiki</a>.
+* Images from the <a href="https://undertale.fandom.com/wiki/Main_Page" target="_blank">Undertale Wiki</a>.
 <div class="show-buttons">
 <br />
 [[Back|Start]]

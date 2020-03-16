@@ -11,9 +11,9 @@ If you are interested in collaborating, do not hesitate to <a href="mailto:{{ si
 
 # Recent Projects
 
-## [Date N' Rule](https://datenrule.com)
+## [DATE N' RULE](https://datenrule.com)
 
-A narrative game based on [Undertale](https://undertale.com/) created to propose
+A narrative game based on [UNDERTALE](https://undertale.com/) created to propose
 to my girlfriend, built using [Tweego](https://www.motoslave.net/tweego/) and
 [Snowman](https://videlais.github.io/snowman/2/) story format.
 
