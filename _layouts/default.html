@@ -12,7 +12,7 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1><a href="{{ "/" | absolute_url }}">{{ site.title | default: site.github.repository_name }}</a></h1>
+        <h2><a href="{{ "/" | absolute_url }}">{{ site.title | default: site.github.repository_name }}</a></h2>
 
         {% if site.logo %}
           <img src="{{site.logo | relative_url}}" alt="Logo" />
@@ -21,6 +21,7 @@
         <p>{{ site.description | default: site.github.project_tagline }}</p>
 
         <p><small>Feel free to <a href="mailto:{{ site.email }}">get in touch with me</a> if you think I can help with your project or just have a question.</small></p>
+        <h2><a href="{{ site.baseurl }}/posts">Check out the blog</a></h2>
 
         {% if site.show_downloads %}
         <ul class="downloads">
