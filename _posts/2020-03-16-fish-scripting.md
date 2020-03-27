@@ -13,25 +13,61 @@ shell script here!
 
 ## History
 
-The fish shell has good
+The fish shell has sound
 [design principles](https://fishshell.com/docs/current/design.html)
 for shells in general, opting towards the Apple model of keepings things simple
-and avoiding too much configurability.  bash and zsh are highly configurable, at
-the expense of discoverability of new features.  Unfortunately, the fish shell
+and avoiding too much configurability.  bash and zsh are highly configurable and
+contain some overlapping language features, at
+the expense of ease of learning and discoverability.
+
+## Features
+
+Some of the shell's absolutely killer features include:
+* Syntax highlighting. Writing commands has never been so easy, since invalid
+commands, files, strings are immediately signaled in red.
+* Autocomplete and tab completion.  Simply start typing your command, and it will
+automatically provide a suggestion, and you can go through suggestions by going
+up or down on the keyboard.  Even typos are fixed.
+* Functions over aliases. Since the concept of functions is very similar to
+aliases in POSIX-style shells, `alias` has been removed.  You can easily create
+your own aliases in a programming-style.
+```fish
+function ll
+  ls -lh $argv
+end
+```
+* Vim support (mostly).  Although the included feature set isn't everything, 
+you can accomplish most vim commands using the built-in vim mode.
+```fish
+set -g fish_key_bindings fish_vi_key_bindings
+# Optional, to disable the vim mode indicator
+function fish_mode_prompt
+  # NOOP
+end
+```
+
+If this is at all interesting, feel free to [install it](https://fishshell.com/)
+
+## Motivation
+
+Unfortunately, the fish shell
 community is not as extensive as bash's and zsh's, so resources for writing scripts
-are rare.  This post aims to clear that up and provide a comprehensive set
+are lacking.  This post aims to clear that up and provide a comprehensive set
 of mini recipes useful while writing scripts in the fish shell language.
 
-The fish shell is meant to be more readable than bash and zsh, which is why it
+The fish shell is meant to restrict features to stay "orthogonal", so it
 is not fully POSIX-compliant.  The more esoteric or strange POSIX tendencies have
 been removed in favor of simplicity. For example, there is no `$"` variable.
-Since fish is meant to be legible, then we should be writing more scripts for it!
+Since the fish shell syntax is meant to be legible, we should be writing more 
+scripts for it!
 
 ## Resources
 
 The following resources provide some great information about the fish shell and
 a few programming idioms, some of which are also covered in this post.
 
+* The [official documentation](https://fishshell.com/docs/current/index.html) 
+contains most of the best information for installing and setup
 * The [fish-cookbook](https://github.com/jorgebucaran/fish-cookbook) by Jorge 
 Bucaran contains lots of great general info
 * This
