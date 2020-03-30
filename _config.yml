@@ -14,6 +14,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: Jon Cinque, Software Dev
+tagline: JonCDev
 email: me@jonc.dev
 description: >- # this means to ignore newlines until "baseurl:"
   With 10 years of experience developing financial and web software, I am
@@ -24,12 +25,19 @@ url: "https://jonc.dev" # the base hostname & protocol for your site, e.g. http:
 github_username:  joncinque
 linkedin_url:  https://www.linkedin.com/in/joncinque/
 google_analytics: UA-157606878-1
+logo: "/icons/favicon.ico"
+social:
+  name: Jon Cinque
+  links:
+    - https://www.linkedin.com/in/joncinque
+    - https://github.com/joncinque
 
 # Build settings
 markdown: kramdown
 theme: jekyll-theme-minimal
 plugins:
   - jekyll-feed
+  - jekyll-sitemap
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list

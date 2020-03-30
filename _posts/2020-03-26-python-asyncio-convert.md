@@ -1,39 +1,40 @@
 ---
 layout: post
-title:  "Conversion from threads to asyncio in Python"
+title:  "Towards asyncio from threading in Python"
 date:   2020-03-26 10:00:00 +0100
-permalink: python-asyncio-conversion
+permalink: python-asyncio-from-threading
 comments: true
-categories: programming python asyncio
+tags: programming python asyncio threading tutorial
 ---
 
 Undertaking a conversion of a multithreaded Python project to 
-[asyncio](https://docs.python.org/3/library/asyncio.html) can be a
-daunting proposition, but with knowledge, time, and tests, your program can reap huge
-performance benefits.
+[asyncio](https://docs.python.org/3/library/asyncio.html) can be
+daunting, but your program can reap huge performance benefits with it.
 
 ## Background
 
 There's ample information about what asyncio is about, and how it differs
 conceptually from multi-threading and multi-processing. This post doesn't cover
-those differences, but rather aims to provide tips for getting around different 
-situations that will likely come up while converting a project to using asyncio
-or also developing a new project using asyncio.
+those differences, but rather aims to provide practical tips for solving
+situations that will likely come up while converting an existing project to asyncio,
+or while developing a new project using asyncio.
+
+## Motivation
 
 I recently converted a large project which used heavy multithreading to 
-constantly fetch and store information from outside sources.  It was the 
+constantly fetch and store I/O bound information.  It was the 
 perfect candidate for conversion, since the program mostly waited
-on resources, either REST APIs, databases, or sockets.  Whenever things weren't
+on resources -- REST APIs, databases, and sockets.  Whenever things weren't
 going fast enough, I simply added more threads and
-called it a day.  After a certain point, however, when
-it got to roughly 50 threads, it was still taking too long between fetches, so
-the plan changed to moving components of the project to asyncio over time and 
-see how that would improve performance.
+called it a day.  After a certain point, however, at roughly 50 threads, it 
+was still taking too long between fetches, so I decided to try moving 
+components of the project to asyncio over time and see how that would 
+improve performance.
 
 Since the conversion was motivated by application performance, I measured 
-average CPU usage, and time between data reporting.  Essentially, the program
-simply fetches data on loop from many different sources, so I measured how long it
-took between fetches on one particular piece of data.  Here are the results:
+average CPU usage, and time to complete data reporting.  Essentially, the program
+simply fetches data on a loop from many different sources, so I measured how long it
+took to do a full round of data reporting.  Here are the results:
 
 | Environment | CPU Usage | Fetch Time |
 |-------|--------|---------|
@@ -47,13 +48,14 @@ variance, while the 3 minutes in the multithreaded ranged wildly, from 1 minute 
 6 minutes.
 
 Converting to asyncio can be extremely beneficial to your system!  Again, note
-that this example was particularly well-suited for big performance gains.
+that this example was particularly well-suited for big performance gains because
+it was mostly I/O bound, and not CPU bound.
 
 ## History
 
-The asyncio package has been around since Python 3.4, but each new release
-brings greater ease of use, along with usual improvements and refinements.  Here
-are some highlights from each release:
+The asyncio package has been around since Python 3.4, and each new release
+has brought greater ease of use, along with usual improvements and refinements.
+Here are some highlights from each release:
 
 * 3.4: first release
 * 3.5: `async` and `await` keywords
@@ -124,9 +126,9 @@ Although we have to tag `async` and `await` everywhere, and all async functions 
 to return a `Task` or `Task<T>`, the general code is pretty similar, since 
 `Main()` can be async.
 
-In Python, asyncio does things a bit differently, so normal code changes a lot 
-with the introduction of the event loop.  Here is a sample program to read and
-print a file synchronously in a separate thread:
+For Python, `asyncio` works very differently from `threading`, so normal code 
+changes a lot with the introduction of the event loop.
+Here is a sample program that uses `threading` to read and print a file synchronously:
 
 ```python
 import threading
@@ -141,7 +143,7 @@ t.start()
 ```
 
 The asynchronous version requires an external package [aiofiles](https://pypi.org/project/aiofiles/)
-and a few other bits:
+and a few other bits which we will break down:
 
 ```python
 import asyncio
@@ -163,15 +165,24 @@ loop.run_until_complete(main())
 
 Note that we could use the `asyncio.run()` and `asyncio.create_task()` 
 convenience functions to make the 
-whole process simpler, but that would mask some concepts that will be
-vital during the conversion, mainly the event loop.  The 
+code look simpler, but that would mask the event loop, which is will be
+vital during the conversion.  The 
 [official documentation](https://docs.python.org/3/library/asyncio-eventloop.html)
-will do the best job of explaining everything in detail, but the most important
-functions for moving from threads are `create_task()`, `run_until_complete()`, 
-and eventually `run_forever()` for any listeners.
+does the best job of explaining everything in detail, but the most important
+functions for moving from threads are:
 
-Those are the basics!  There's a lot more work before the project will be all
-asyncio, as you might imagine.
+* `loop.run_until_complete()` to run an async function and wait for the result,
+compare to a normal function call
+* `loop.create_task()` to start and run an async function without blocking, compare 
+to `threading.Thread.start()`
+* `run_forever()` to keep the program up and running, compare to
+```python
+while True:
+    time.sleep(0.1)
+```
+
+Those are the basics!  With this background, and your effort, it's only a
+matter of time before the whole project is converted to asyncio.
 
 ## Guidelines for converting your code
 
@@ -208,8 +219,9 @@ You will copy it to `./component_async.py` or (even better)
 
 ```python
 import asyncio
+from .component import Component as SyncComponent
 
-class Component(object):
+class Component(SyncComponent):
     # __init__ and friends omitted for brevity
     async def perform_long_job(self):
         # some long-running code here
@@ -288,9 +300,9 @@ level possible.
 
 Note that this approach does violate some DRY principles, but there
 will unfortunately be some inevitable repetition with some functions since one
-function cannot be both async and synchronous at the same time.  This doesn't
-mean to neglect all code reuse.  Do reuse all functionality that can stay 
-synchronous for the async version.  To simplify this, you can have the async
+function cannot be both async and sync at the same time.  This doesn't
+mean you should neglect all code reuse.  Do reuse functionality that can stay 
+sync in the async version.  To that end, you can have the async
 version inherit from the synchronous version.
 
 ### Managing concurrent tasks
@@ -299,7 +311,8 @@ At the top-level, instead of handling `Thread`s, you will have `Task`s everywher
 created using `create_task()`.  Remember that the code starts executing right
 after the call to `create_task()`, and you do not need to `await` it to start.
 
-Be sure to refer to the [Task documentation](https://docs.python.org/3/library/asyncio-task.html#task-object)
+Be sure to refer to the
+[Task documentation](https://docs.python.org/3/library/asyncio-task.html#task-object)
 to see what is available. You will probably be happy with `done()`, 
 `exception()`, and `result()`, but be sure to explore around.
 
@@ -307,11 +320,16 @@ to see what is available. You will probably be happy with `done()`,
 
 Before you've even started tackling the conversion of your own code, you'll 
 need to see how all your external dependencies support asyncio, which will
-strongly influence any design changes required in the async version.  Your
-dependencies will likely fall into a few different cases, all covered here.
+strongly influence any design changes required in your application.  Your
+dependencies will likely fall into a few different cases, from easiest to hardest:
+
+* a totally compatible drop-in replacement
+* an incompatible drop-in replacement
+* no async version possible, operating independently
+* no async version possible, requires async components
 
 Third-party libraries are understandably all over the map for async support.
-Thankfully, it's only going to get better as asyncio continues to gain traction
+Thankfully, it's only getting better as asyncio continues to gain traction
 all over the community.  It can also be the perfect opportunity to do some
 useful and appreciated open-source work.  For example, 
 [here](https://github.com/RomelTorres/alpha_vantage/pull/191) is a pull request
@@ -329,27 +347,28 @@ there is extensive reuse of pymongo objects within motor, so most imports won't 
 need to be updated.
 
 Search around for the async variants and cross your fingers that it's there!
-And if not, you'll be able to make a name for yourself in the open-source
-community.
+And if not, you can make a name for yourself in the open-source community.
 
-### Almost drop-in replacement
+### Incompatible drop-in replacement
 
-First-party libraries in Python unfortunately don't work as easily as most of
-their third-party counterparts.  For example, the
-[socket](https://docs.python.org/3/library/socket.html) library is mostly
+Some async libraries look similar to their sync versions but aren't exactly the
+same.  For example, first-party Python libraries unfortunately look a bit different.
+The [socket](https://docs.python.org/3/library/socket.html) library is mostly
 replaced by functions that exist directly on the
 [event loop](https://docs.python.org/3/library/asyncio-eventloop.html#opening-network-connections)
-with some inconsistencies.  For example, the asyncio version of creating a
-connection requires a `protocol_factory` implementing some 
+with some inconsistencies.  The asyncio version of creating a connection 
+requires a `protocol_factory` implementing some 
 [network protocol](https://docs.python.org/3/library/asyncio-protocol.html#asyncio-protocol)
 for handling data when it's sent or received.
 
-The concept of passing the event loop down to client code used to be the 
-stylistic asyncio standard, but this has mostly been replaced with getting the
-current event loop in most situations.  Older libraries may still require the
-event loop.  You can find the discussion [here](https://github.com/asyncio-docs/asyncio-doc/pull/13).
+Note that some APIS will require the event loop to work.  Passing the event loop 
+down to client code used to be the stylistic standard, but this has mostly been
+replaced with getting the current event loop in most situations, unless your 
+application requires multiple event loops.  Beware that older 
+libraries may still require the event loop directly.  You can find the interesting
+discussion [here](https://github.com/asyncio-docs/asyncio-doc/pull/13).
 
-### No external library, can't port
+### No async library available, no dependency on async components
 
 What do you do if you have mostly asynchronous
 replacements for all of your dependencies, but there's still one or two holdouts?
@@ -362,11 +381,11 @@ and run your blocking synchronous code within an asynchronous context.  This
 will look a lot like your old threaded setup.
 
 This step is extremely important, because one blocking call can stall your entire
-asynchronous setup.  Those `await` calls are vital because the event loop can
-move onto other tasks during those points.  If a non-awaited call takes a long
-time, nothing else can process in that time.
+asynchronous setup.  Remember that those `await` calls tell the event loop to
+move onto other tasks.  If a non-awaited call takes a long time, nothing else 
+can be done in that time.
 
-### Multithreaded environment
+### No async library available, need to call async components
 
 What do you do if you are using a sync-only external library that maintains its own 
 thread and needs to call async code?  An example would be a listening socket 
@@ -376,10 +395,11 @@ This is a problem because the listening thread is calling into the event loop
 owned by another thread.  If multiple threads are asking one event loop to do
 things, you can run into normal multi-threading race conditions.
 
-Again, thankfully, asyncio has you covered! Using 
+Again, thankfully, asyncio has you covered! First, it will raise an exception
+if you try to use an event loop from another thread.  Second, you have
 [`run_coroutine_threadsafe()`](https://docs.python.org/3/library/asyncio-task.html#asyncio.run_coroutine_threadsafe)
-you can handle this situation without too much trouble. Note that this gives you
-`concurrent.futures.Future`, which must be "awaited" in a synchronous way using
+to handle this situation without too much trouble. Note that this function gives you
+`concurrent.futures.Future`, which must be sychronously "awaited" using
 `result(timeout)` if you need the return value.
 
 ## Testing
@@ -394,7 +414,7 @@ missing `await`s anywhere.  Trust me, that will happen.
 
 ## Wrapping up
 
-This post was meant to clarify ways of moving over to the new world of 
+This post was meant to clarify how to move over to the new world of 
 asyncio in Python.  Be sure to let me know if this worked for you or if you've 
 encountered other cases not covered here during your asyncio transition.  The
 official documentation even lists

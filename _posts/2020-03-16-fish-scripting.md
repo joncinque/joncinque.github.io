@@ -4,12 +4,12 @@ title:  "Fish shell scripting guide"
 date:   2020-03-16 10:13:11 +0100
 permalink: fish-scripting
 comments: true
-categories: programming shell
+tags: programming fish shell scripting tutorial
 ---
 
-The [fish shell](https://fishshell.com/) has been around for some time, but there
-aren't many guides for creating scripts from scratch.  Learn the basics of writing a fish
-shell script here!
+The user-friendly [fish shell](https://fishshell.com/) doesn't
+have too many guides for writing scripts from scratch.
+Learn the basics of writing a fish shell script here!
 
 ## History
 

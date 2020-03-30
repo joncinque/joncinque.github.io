@@ -1,21 +1,19 @@
 ---
 layout: post
-title:  "Programming Polyglots: Pair to learn a new language"
+title:  "Programming Polyglots: Pair to learn"
 date:   2020-03-11 10:13:11 +0100
 permalink: programming-polyglots
 comments: true
-categories: programming learn
+tags: programming learn pair interview
 ---
 
-This exercise was presented at the Recurse Center to combine its two great
-loves: learning and community! The point is to expose yourself to the fringes 
-of your language knowledge . And who knows, maybe you'll be inspired to use it 
-for an upcoming project.
+Two people pair up to accomplish problems using a language that neither of them
+knows well. Provided problems are based on programming interview questions.
 
-Two people pair program to accomplish a series of problems using a language that
-neither of them knows well. Potential problems are given later in the list. After
-some time spent working through problems, the pairs come back together to share
-what they've learned.
+This exercise was originally presented at the Recurse Center to combine its 
+two great loves: learning and community! The point is to expose yourself to 
+the fringes of your language knowledge. And who knows, maybe you'll be inspired 
+to use it for an upcoming project.
 
 ## Language Rundown
 

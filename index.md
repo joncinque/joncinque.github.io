@@ -69,6 +69,7 @@ questions directly!
 ### [dx-react-grid-grommet](https://github.com/atanasster/dx-react-grid-grommet)
 
 * Project maintainer
+* Update project to TypeScript
 * Add inline cell editing
 * Fix cell focus after row creation
 
