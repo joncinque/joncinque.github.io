@@ -2,6 +2,7 @@ SHELL=/usr/bin/env fish
 
 SNOWMAN_DIR = ~/src/ref/snowman
 TWEEGO_DIR = ~/src/ref/tweego
+DEPLOY_DIR = $(shell pwd)
 
 .PHONY: snowman tweego build dev kid toriel dummy jerry sans end
 
@@ -17,6 +18,9 @@ tweego:
 	go get
 	go build
 	ln -s $(SNOWMAN_DIR)/dist/snowman-2.0.3 $(TWEEGO_DIR)/storyformats
+
+deploy:
+	scp -r datenrule.html $(USER)@datenrule.com:$(DEPLOY_DIR)
 
 build:
 	$(TWEEGO_DIR)/tweego -f snowman-2.0.3 -o datenrule.html datenrule

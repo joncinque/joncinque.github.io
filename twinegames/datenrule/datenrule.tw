@@ -14,6 +14,9 @@ DATE N' RULE
 <img class="title" src="twinemedia/img/DateNRule.png" />
 
 <div class="start-buttons show-buttons">
+By Jon Cinque
+<br />
+Inspired by UNDERTALE by Toby Fox
 <ul>
 <li>[[New Game]]</li>
 <li>[[Chapter Select]]</li>
@@ -1582,6 +1585,7 @@ setup.music.play("twinemedia/music/mus_dogsong.ogg");
 * 'Sans' font by fraxtil at <a href="http://fra.xtil.net/undertale/fonts/Comic-Sans-UT.zip" target="_blank">fra.xtil.net</a>.
 * Sounds by Benno950 at <a href="https://www.deviantart.com/benno950/art/Download-Undertale-Sound-Effects-589709656" target="_blank">DeviantArt</a>.
 * Images from the <a href="https://undertale.fandom.com/wiki/Main_Page" target="_blank">Undertale Wiki</a>.
+* No copyright is claimed in UNDERTALE and to the extent that material may appear to be infringed, I assert that such alleged infringement is permissible under fair use principles in U.S. copyright laws. If you believe material has been used in an unauthorized manner, please <a href="mailto:datenrule@jonc.dev" target="_blank">contact me</a>.
 <div class="show-buttons">
 <br />
 [[Back|Start]]
