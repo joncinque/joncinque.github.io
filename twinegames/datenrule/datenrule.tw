@@ -1,7 +1,8 @@
 :: StoryData
 {
 	"ifid": "D674C58C-DEFA-4F70-B7A2-27742230C0FC",
-	"format": "Snowman",
+	"format": "snowman",
+	"format-version": "2.0.3",
 	"zoom": 0.25
 }
 
@@ -17,6 +18,8 @@ DATE N' RULE
 By Jon Cinque
 <br />
 Inspired by UNDERTALE by Toby Fox
+<br />
+See my <a href="https://jonc.dev/twine-games-tutorial" target="_blank">tutorial</a> for more info on making your own!
 <ul>
 <li>[[New Game]]</li>
 <li>[[Chapter Select]]</li>
@@ -1567,7 +1570,7 @@ setup.sans = false;
 setup.typewriter.src = "twinemedia/sound/talk_default.wav";
 print(setup.createChatArea('[[Credits]]'));
 setup.typewriter.write([
-"I love you, Lauren.",
+"I love you.",
 "And I can't wait to spend a lifetime with you.",
 "Love, Jon"
 ]);

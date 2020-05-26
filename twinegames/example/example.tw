@@ -1,0 +1,20 @@
+:: StoryData
+{
+  "ifid": "F58E6A21-357C-4D49-A264-FB0B3AC4FABF",
+	"format": "snowman",
+  "format-version": "2.0.3",
+	"zoom": 0.25
+}
+
+:: StoryTitle
+
+Example Twee Story
+
+:: Start
+
+It worked!
+[[Congratulations]]
+
+:: Congratulations
+
+It even worked with a passage link!

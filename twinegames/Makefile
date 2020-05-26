@@ -4,7 +4,7 @@ SNOWMAN_DIR = ~/src/ref/snowman
 TWEEGO_DIR = ~/src/ref/tweego
 DEPLOY_DIR = $(shell pwd)
 
-.PHONY: snowman tweego build dev kid toriel dummy jerry sans end
+.PHONY: example snowman tweego build dev kid toriel dummy jerry sans end
 
 snowman:
 	git clone https://github.com/videlais/snowman.git $(SNOWMAN_DIR)
@@ -19,32 +19,35 @@ tweego:
 	go build
 	ln -s $(SNOWMAN_DIR)/dist/snowman-2.0.3 $(TWEEGO_DIR)/storyformats
 
+example:
+	$(TWEEGO_DIR)/tweego -o example.html example
+
 deploy:
 	scp -r datenrule.html $(USER)@datenrule.com:$(DEPLOY_DIR)
 
 build:
-	$(TWEEGO_DIR)/tweego -f snowman-2.0.3 -o datenrule.html datenrule
+	$(TWEEGO_DIR)/tweego -o datenrule.html datenrule
 
 dev:
-	$(TWEEGO_DIR)/tweego -f snowman-2.0.3 -w -o datenrule.html datenrule
+	$(TWEEGO_DIR)/tweego -w -o datenrule.html datenrule
 
 toriel:
-	$(TWEEGO_DIR)/tweego -f snowman-2.0.3 -s Toriel -w -o datenrule.html datenrule
+	$(TWEEGO_DIR)/tweego -s Toriel -w -o datenrule.html datenrule
 
 dummy:
-	$(TWEEGO_DIR)/tweego -f snowman-2.0.3 -s DummyDateStart -w -o datenrule.html datenrule
+	$(TWEEGO_DIR)/tweego -s DummyDateStart -w -o datenrule.html datenrule
 
 kid:
-	$(TWEEGO_DIR)/tweego -f snowman-2.0.3 -s MonsterKidDateStart -w -o datenrule.html datenrule
+	$(TWEEGO_DIR)/tweego -s MonsterKidDateStart -w -o datenrule.html datenrule
 
 jerry:
-	$(TWEEGO_DIR)/tweego -f snowman-2.0.3 -s JerryDateStart -w -o datenrule.html datenrule
+	$(TWEEGO_DIR)/tweego -s JerryDateStart -w -o datenrule.html datenrule
 
 choice:
-	$(TWEEGO_DIR)/tweego -f snowman-2.0.3 -s JerryDateEnd -w -o datenrule.html datenrule
+	$(TWEEGO_DIR)/tweego -s JerryDateEnd -w -o datenrule.html datenrule
 
 sans:
-	$(TWEEGO_DIR)/tweego -f snowman-2.0.3 -s SansEnter -w -o datenrule.html datenrule
+	$(TWEEGO_DIR)/tweego -s SansEnter -w -o datenrule.html datenrule
 
 end:
-	$(TWEEGO_DIR)/tweego -f snowman-2.0.3 -s SansDateScience -w -o datenrule.html datenrule
+	$(TWEEGO_DIR)/tweego -s SansDateScience -w -o datenrule.html datenrule
