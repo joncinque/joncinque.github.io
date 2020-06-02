@@ -22,7 +22,10 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://jonc.dev" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: joncinque
 linkedin_url: https://www.linkedin.com/in/joncinque/
-google_analytics: UA-157606878-1
+matomo:
+  site_id: "1"
+  uri: "matomo.jonc.dev"
+  opt-out: true
 logo: "/icons/favicon.ico"
 social:
   name: Jon Cinque
