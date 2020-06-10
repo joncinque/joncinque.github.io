@@ -26,7 +26,6 @@ matomo:
   site_id: "1"
   uri: "matomo.jonc.dev"
   opt-out: true
-logo: "/icons/favicon.ico"
 social:
   name: Jon Cinque
   links:
