@@ -4,6 +4,7 @@ title:  "Making Twine Games, Programmer Edition"
 date:   2020-05-25 10:00:00 +0100
 permalink: twine-games-tutorial
 comments: true
+image: /assets/datenrule.png
 tags: programming twine games tutorial
 ---
 
@@ -11,6 +12,8 @@ Twine and its associated tools allow you to easily create a narrative browser
 game with all of the features you might want.  I made an
 [UNDERTALE](https://undertale.com/)-inspired game to propose to my girlfriend.
 She said yes! Check it out at [DATE N' RULE](https://datenrule.com).
+
+![DATE N' RULE Screen](/assets/datenrule.png)
 
 ## TL; DR
 

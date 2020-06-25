@@ -4,12 +4,15 @@ title:  "Towards asyncio from threading in Python"
 date:   2020-03-26 10:00:00 +0100
 permalink: python-asyncio-from-threading
 comments: true
+image: /assets/asyncio.png
 tags: programming python asyncio threading tutorial
 ---
 
 Undertaking a conversion of a multithreaded Python project to 
 [asyncio](https://docs.python.org/3/library/asyncio.html) can be
 daunting, but your program can reap huge performance benefits with it.
+
+![basic asyncio code](/assets/asyncio.png)
 
 ## Background
 
